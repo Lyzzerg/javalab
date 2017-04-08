@@ -54,26 +54,6 @@ class Client implements Runnable{
     }
 }
 
-class SendingData extends Point implements Serializable{
-    private int PointType; /*
-                     1 - StartPoint
-                     2 - EndPoint
-                     3 -
-                     4 -
-                      */
-    SendingData(Point _point, int _PointType){
-        this.x = (int)_point.getX();
-        this.y = (int)_point.getY();
-        PointType = _PointType;
-    }
-
-    public int getPointType(){
-        return PointType;
-    }
-    public void setPointType(int _type) { PointType=_type; }
-}
-
-
 public class MainFrame extends JFrame{
 
     MainFrame(){
@@ -141,7 +121,7 @@ class DrawingPane extends JComponent {
     }
     private ArrayList<Primitives> primitivesgroup = new ArrayList<>();
 
-    abstract class Primitives implements Serializable{
+    abstract class Primitives {
         protected boolean moving=false;
         public abstract void paint(Graphics gr);
         public abstract double distancetoNearestPoint(Point _point);
@@ -153,7 +133,7 @@ class DrawingPane extends JComponent {
         }
     }
 
-    class Line extends Primitives {
+    class Line extends Primitives implements Serializable{
         private Point start;
         private Point end;
 
@@ -213,7 +193,7 @@ class DrawingPane extends JComponent {
         }
     }
 
-    class Circle extends Primitives{
+    class Circle extends Primitives implements Serializable{
         private Point lupperpoint;
         private Point rdownpoint;
 
@@ -271,7 +251,7 @@ class DrawingPane extends JComponent {
         }
     }
 
-    class Rectangle extends Primitives{
+    class Rectangle extends Primitives implements Serializable{
         private Point lupperpoint;
         private Point rdownpoint;
         Rectangle(Point _upperpoint, Point _downpoint){
