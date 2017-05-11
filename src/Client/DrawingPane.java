@@ -1,6 +1,6 @@
 package Client;
 
-import Primitives.*;
+import Figures.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

@@ -1,6 +1,6 @@
 package Server;
 
-import Primitives.Primitives;
+import Figures.Primitives;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -8,7 +8,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import Primitives.*;
+import Figures.*;
 
 /**
  * Created by nesoldr on 27.04.17.
@@ -25,7 +25,7 @@ public class ClientListening extends Thread {
 
     public void run(){
 
-        System.out.println("Welcome to Server.Server side");
+        System.out.println("Welcome to ServerLogic.ServerLogic side");
 
         ServerSocket servers = null;
         Socket fromclient = null;
