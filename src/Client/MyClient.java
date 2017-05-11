@@ -1,6 +1,6 @@
 package Client;
 
-import Primitives.Primitives;
+import Figures.Primitives;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -21,7 +21,7 @@ public class MyClient extends Thread implements Runnable{
     public void run() {
 
         try {
-            System.out.println("Trying connect to Server.Server " + HostAdress + " with port " + ServerPort);
+            System.out.println("Trying connect to ServerLogic.ServerLogic " + HostAdress + " with port " + ServerPort);
             ToServerSocket = new Socket(HostAdress, ServerPort);
             System.out.println("Connected");
             serializer = new ObjectOutputStream(ToServerSocket.getOutputStream());
