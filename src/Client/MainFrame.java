@@ -40,7 +40,7 @@ public class MainFrame extends JFrame{
         createClearButton(draw);
     }
 
-    public static void main(String args[]) throws IOException {
+    public static void main(String args[]) throws IOException, ClassNotFoundException {
 
         JFrame.setDefaultLookAndFeelDecorated(true);
         MainFrame frame = new MainFrame();
@@ -52,31 +52,26 @@ public class MainFrame extends JFrame{
         System.out.println("FrameStarted");
 
         /* client part */
-
-        MyClient client = new MyClient();
-        client.setDaemon(true);
-        client.start();
+        ServerListener connection = new ServerListener();
+        connection.Connect();
+        SendListener sending = new SendListener(connection);
+        ReceiveListener receiving = new ReceiveListener(connection);
+        sending.start();
+        receiving.start();
         int i=0;
         while(true){
             if(i%1e+8 == 0)
                 System.out.println(drawingPane.addedflag);
             if(drawingPane.addedflag){
+                //отправить добавленный элемент
                 System.out.println("I'M HERE");
-                try {
-
-                    if(drawingPane.primitivesgroup.get(drawingPane.primitivesgroup.size()-1) instanceof Line)
-                        client.Send((Line)drawingPane.primitivesgroup.get(drawingPane.primitivesgroup.size()-1));
-                    if(drawingPane.primitivesgroup.get(drawingPane.primitivesgroup.size()-1) instanceof MyRectangle)
-                        client.Send((MyRectangle)drawingPane.primitivesgroup.get(drawingPane.primitivesgroup.size()-1));
-                    if(drawingPane.primitivesgroup.get(drawingPane.primitivesgroup.size()-1) instanceof Circle)
-                        client.Send((Circle)drawingPane.primitivesgroup.get(drawingPane.primitivesgroup.size()-1));
-
-                    drawingPane.addedflag = false;
-                    System.out.println(drawingPane.addedflag);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    System.out.println("LMAO");
-                }
+                sending.setPrimitive(drawingPane.primitivesgroup.get(drawingPane.primitivesgroup.size()-1));
+                drawingPane.addedflag = false;
+                System.out.println(drawingPane.addedflag);
+            } else{
+                //проверить есть ли новые элементы:
+                //принять все элементы от сервера
+                //сравнивая их с теми, что уже есть
             }
             i = i+1;
         }

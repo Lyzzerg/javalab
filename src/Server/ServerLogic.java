@@ -4,9 +4,7 @@ package Server; /**
 import Figures.Primitives;
 import Figures.*;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -14,10 +12,11 @@ import java.util.ArrayList;
 
 public class ServerLogic implements Runnable{
     static ServerSocket serverSocket;
+
     volatile boolean keepProcessing=true;
-    ObjectInputStream input;
-    ObjectOutputStream output;
-    ArrayList<Primitives> primitives = new ArrayList<>();
+
+    volatile static ArrayList<Primitives> primitives = new ArrayList<>();
+    volatile static int num_added_figure=-1;
 
     @Override
     public void run() {
@@ -44,43 +43,32 @@ public class ServerLogic implements Runnable{
         Runnable clientHandler = new Runnable() {
             @Override
             public void run() {
-                System.out.println("ServerLogic: getting message from client"+socket);
-                try {
-                    System.out.println("receiving input stream from client");
-                    input = new ObjectInputStream(socket.getInputStream());
-                    //output = new ObjectOutputStream(socket.getOutputStream());
-                    System.out.println("input stream received");
-                    System.out.println(input);
-                } catch (IOException e) {
-                    System.out.println("Client disconnected without sending EXIT message");
-                }
-                try {
-                    if (input.available() != 0) {
-                        if (input.readObject() instanceof Figures.Line) {
-                            primitives.add((Figures.Line) input.readObject());
-                        } else if (input.readObject() instanceof Figures.MyRectangle) {
-                            primitives.add((Figures.MyRectangle) input.readObject());
-                            System.out.println("RECTAGLE");
-                        } else if (input.readObject() instanceof Figures.Circle) {
-                            primitives.add((Figures.Line) input.readObject());
-                            System.out.println("CIRCLE");
-                        } else {
-                            System.out.println("niche tam net");
+                ClientListener connection = new ClientListener(socket);
+                connection.Connect();
+                SendListener sendListener = new SendListener(connection);
+                ReceiveListener receiveListener = new ReceiveListener(connection);
+                sendListener.start();
+                receiveListener.start();
+                int figure_num = num_added_figure;
+                while(true) {
+                        //если количество фигур не совпадает разослать всем.
+                        if(figure_num < num_added_figure) {
+                            while(figure_num < num_added_figure){
+                                figure_num++;
+                                sendListener.setPrimitive(primitives.get(figure_num));
+                            }
                         }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
         };
         Thread clientConnection = new Thread(clientHandler);
         clientConnection.start();
     }
+
     public void stopProcessing(){
         keepProcessing = false;
         closeIgnoringException(serverSocket);
     }
-
     private void handle(Exception e){
         if(!(e instanceof SocketException)){
             e.printStackTrace();

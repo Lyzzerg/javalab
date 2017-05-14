@@ -24,7 +24,7 @@ public class DrawingPane extends JComponent {
     public void setleftcorner(Point _point){
         leftcorner = _point;
     }
-    public ArrayList<Primitives> primitivesgroup = new ArrayList<>();
+    public static volatile ArrayList<Primitives> primitivesgroup = new ArrayList<>();
 
     DrawingPane(){
         addMouseListener(new CustomMouseListener());
