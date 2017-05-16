@@ -40,26 +40,26 @@ public class ServerLogic implements Runnable{
     void process(Socket socket) {
         if (socket == null)
             return;
-        Runnable clientHandler = new Runnable() {
-            @Override
-            public void run() {
-                ClientListener connection = new ClientListener(socket);
-                connection.Connect();
-                SendListener sendListener = new SendListener(connection);
-                ReceiveListener receiveListener = new ReceiveListener(connection);
-                sendListener.start();
-                receiveListener.start();
-                int figure_num = num_added_figure;
-                while(true) {
-                        //если количество фигур не совпадает разослать всем.
-                        if(figure_num < num_added_figure) {
-                            while(figure_num < num_added_figure){
-                                figure_num++;
-                                sendListener.setPrimitive(primitives.get(figure_num));
-                            }
+        Runnable clientHandler = () -> {
+            ClientListener connection = new ClientListener(socket);
+            connection.Connect();
+            SendListener sendListener = new SendListener(connection);
+            ReceiveListener receiveListener = new ReceiveListener(connection);
+            sendListener.start();
+            receiveListener.start();
+            int figure_num = -1;
+            System.out.println(num_added_figure);
+            while(connection.isConnected()) {
+                    //если количество фигур не совпадает разослать всем.
+                    if(figure_num < num_added_figure) {
+                        while(figure_num < num_added_figure){
+                            figure_num++;
+                            System.out.println(figure_num);
+                            sendListener.setPrimitive(primitives.get(figure_num));
                         }
-                }
+                    }
             }
+            sendListener.Stop();
         };
         Thread clientConnection = new Thread(clientHandler);
         clientConnection.start();

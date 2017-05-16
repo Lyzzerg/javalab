@@ -25,25 +25,31 @@ public class ReceiveListener extends Thread {
                 try {
                     System.out.println("trying receive from "+connection.getClient());
                     Receive();
-                    Thread.sleep(10000);
                 } catch (IOException e) {
+                    System.out.println("client disconnected");
+                    System.out.println("killing receive client thread");
+                    Stop();
                 } catch (ClassNotFoundException e) {
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
             }
         }
+        System.out.println("receive thread dead");
     }
 
     private void Receive() throws IOException, ClassNotFoundException {
-        System.out.println("lil");
         primitive = connection.getDeserializer().readObject();
-        System.out.println("lul");
         if(primitive instanceof Primitives) {
             ServerLogic.primitives.add((Primitives) primitive);
             ServerLogic.num_added_figure++;
             System.out.println("Element"+primitive+"received");
         }
         primitive = null;
+    }
+    public void Stop() {
+        working = false;
+        try {
+            connection.closeConnection();
+        } catch (IOException e) {
+        }
     }
 }

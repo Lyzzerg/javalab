@@ -1,6 +1,8 @@
 package Client;
 
 import Figures.*;
+import Server.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -14,22 +16,24 @@ public class DrawingPane extends JComponent {
     private Point startPoint;
     private Point endPoint;
     private int type = 1;
-    private int curr = -1;
+    public static volatile int curr = -1;
     private int numofnearestfigure;
     private boolean moveObject=false;
     private double eps = 20;
     private Point leftcorner;
     public boolean addedflag=false;
+    private SendListener sendListener = null;
 
     public void setleftcorner(Point _point){
         leftcorner = _point;
     }
     public static volatile ArrayList<Primitives> primitivesgroup = new ArrayList<>();
 
-    DrawingPane(){
+    DrawingPane(SendListener _sendListener){
         addMouseListener(new CustomMouseListener());
         addKeyListener(new CustomKeyListener());
         addMouseMotionListener(new CustomMouseMotionListener());
+        sendListener = _sendListener;
     }
 
     @Override
@@ -185,8 +189,8 @@ public class DrawingPane extends JComponent {
                 default:
                     break;
             }
-            addedflag = true;
-            System.out.println(addedflag);
+            sendListener.setPrimitive(primitivesgroup.get(curr));
+            System.out.println("element added");
             repaint();
         }
 

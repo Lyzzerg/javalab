@@ -1,5 +1,7 @@
 package Client;
 
+import Figures.Primitives;
+
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.concurrent.TimeUnit;
@@ -20,26 +22,34 @@ public class SendListener  extends Thread {
     @Override
     public void run() {
         while (working){
-            if(primitive!=null)
+            try {
+                System.out.println("sleeping send");
+                Thread.sleep(1000000000);
+            } catch (InterruptedException e) {
                 try {
+                    System.out.println("sending");
                     Send();
-                    Thread.sleep(10000);
-                } catch (IOException e) {
-                } catch (InterruptedException e) {
+                    primitive = null;
+                } catch (IOException e1) {
                 }
-            primitive=null;
+            }
+
         }
     }
 
     private void Send() throws IOException {
         connection.getSerializer().writeObject(primitive);
         connection.getSerializer().flush();
+        primitive=null;
         System.out.println("sended");
     }
 
-    public void setPrimitive(Object _primitive){
+    public void  setPrimitive(Object _primitive){
         primitive=_primitive;
-        System.out.println("setting done");
+        if(primitive instanceof Primitives) {
+            System.out.println("setting done");
+            interrupt();
+        }
     }
 
     public void Stop(){

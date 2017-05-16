@@ -30,6 +30,21 @@ public class ClientListener {
         return client;
     }
 
+    public boolean isConnected(){
+        try {
+            client.getOutputStream();
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public void closeConnection() throws IOException {
+        serializer = null;
+        deserializer = null;
+        client.close();
+    }
+
     public ObjectOutputStream getSerializer() {
         return serializer;
     }

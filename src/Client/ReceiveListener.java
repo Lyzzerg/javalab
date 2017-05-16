@@ -24,11 +24,8 @@ public class ReceiveListener extends Thread {
         while (working){
             try {
                 Receive();
-                Thread.sleep(10000);
             } catch (IOException e) {
             } catch (ClassNotFoundException e) {
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         }
     }
@@ -36,8 +33,10 @@ public class ReceiveListener extends Thread {
     private void Receive() throws IOException, ClassNotFoundException {
         if(primitive==null)
             primitive=connection.getDeserializer().readObject();
-        if(primitive instanceof Primitives)
-            DrawingPane.primitivesgroup.add((Primitives)primitive);
+        if(primitive instanceof Primitives) {
+            DrawingPane.primitivesgroup.add((Primitives) primitive);
+            DrawingPane.curr++;
+        }
         primitive = null;
     }
 
