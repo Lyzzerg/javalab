@@ -2,38 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4fa62fe5-d4ac-425d-a3c7-a17b669a6762" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/production/javalab/Figures/Packet.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/production/javalab/MoveFigure/MovingPrimitive.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Figures/Packet.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/MoveFigure/MovingPrimitive.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/javalab/Client/DrawingPane$CustomKeyListener.class" afterPath="$PROJECT_DIR$/out/production/javalab/Client/DrawingPane$CustomKeyListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/javalab/Client/DrawingPane$CustomMouseListener.class" afterPath="$PROJECT_DIR$/out/production/javalab/Client/DrawingPane$CustomMouseListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/javalab/Client/ReceiveListener.class" afterPath="$PROJECT_DIR$/out/production/javalab/Client/ReceiveListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/javalab/Client/SendListener.class" afterPath="$PROJECT_DIR$/out/production/javalab/Client/SendListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/javalab/Client/ServerHandler.class" afterPath="$PROJECT_DIR$/out/production/javalab/Client/ServerHandler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/javalab/Figures/Circle.class" afterPath="$PROJECT_DIR$/out/production/javalab/Figures/Circle.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/javalab/Figures/Line.class" afterPath="$PROJECT_DIR$/out/production/javalab/Figures/Line.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/javalab/Figures/MyRectangle.class" afterPath="$PROJECT_DIR$/out/production/javalab/Figures/MyRectangle.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/javalab/Figures/Primitives.class" afterPath="$PROJECT_DIR$/out/production/javalab/Figures/Primitives.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/javalab/Server/ClientHandler.class" afterPath="$PROJECT_DIR$/out/production/javalab/Server/ClientHandler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/javalab/Server/ReceiveListener.class" afterPath="$PROJECT_DIR$/out/production/javalab/Server/ReceiveListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/javalab/Server/SendListener.class" afterPath="$PROJECT_DIR$/out/production/javalab/Server/SendListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/javalab/Server/ServerLogic.class" afterPath="$PROJECT_DIR$/out/production/javalab/Server/ServerLogic.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Client/DrawingPane.java" afterPath="$PROJECT_DIR$/src/Client/DrawingPane.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Client/ReceiveListener.java" afterPath="$PROJECT_DIR$/src/Client/ReceiveListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Client/SendListener.java" afterPath="$PROJECT_DIR$/src/Client/SendListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Client/ServerHandler.java" afterPath="$PROJECT_DIR$/src/Client/ServerHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Client/ServerListener.java" afterPath="$PROJECT_DIR$/src/Client/ServerListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Figures/Circle.java" afterPath="$PROJECT_DIR$/src/Figures/Circle.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Figures/Line.java" afterPath="$PROJECT_DIR$/src/Figures/Line.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Figures/MyRectangle.java" afterPath="$PROJECT_DIR$/src/Figures/MyRectangle.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Figures/Primitives.java" afterPath="$PROJECT_DIR$/src/Figures/Primitives.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Server/ClientHandler.java" afterPath="$PROJECT_DIR$/src/Server/ClientHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Server/ReceiveListener.java" afterPath="$PROJECT_DIR$/src/Server/ReceiveListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Server/SendListener.java" afterPath="$PROJECT_DIR$/src/Server/SendListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Server/ServerLogic.java" afterPath="$PROJECT_DIR$/src/Server/ServerLogic.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -70,7 +40,7 @@
             <entry file="file://$PROJECT_DIR$/.gitignore">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="0">
-                  <caret line="0" column="4" lean-forward="true" selection-start-line="0" selection-start-column="4" selection-end-line="0" selection-end-column="4" />
+                  <caret line="0" column="5" lean-forward="true" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
                   <folding />
                 </state>
               </provider>
@@ -903,12 +873,12 @@
       <workItem from="1491658672303" duration="20000" />
       <workItem from="1491659435964" duration="262000" />
       <workItem from="1494489144377" duration="4861000" />
-      <workItem from="1494494493957" duration="67258000" />
+      <workItem from="1494494493957" duration="67313000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="141084000" />
+    <option name="totallyTimeSpent" value="141139000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1437,7 +1407,7 @@
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="4" lean-forward="true" selection-start-line="0" selection-start-column="4" selection-end-line="0" selection-end-column="4" />
+          <caret line="0" column="5" lean-forward="true" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
           <folding />
         </state>
       </provider>
