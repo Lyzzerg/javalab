@@ -21,19 +21,16 @@ public class DrawingPane extends JComponent {
     private boolean moveObject=false;
     private double eps = 20;
     private Point leftcorner;
-    public boolean addedflag=false;
-    private SendListener sendListener = null;
 
     public void setleftcorner(Point _point){
         leftcorner = _point;
     }
     public static volatile ArrayList<Primitives> primitivesgroup = new ArrayList<>();
 
-    DrawingPane(SendListener _sendListener){
+    DrawingPane(){
         addMouseListener(new CustomMouseListener());
         addKeyListener(new CustomKeyListener());
         addMouseMotionListener(new CustomMouseMotionListener());
-        sendListener = _sendListener;
     }
 
     @Override
@@ -159,9 +156,14 @@ public class DrawingPane extends JComponent {
                         Line line = (Line) primitivesgroup.get(curr);
                         line.setEnd(e.getPoint());
                         primitivesgroup.set(curr, line);
+                        MainFrame.sendListener.setPrimitive(primitivesgroup.get(curr));
                     } else {
-                        if(numofnearestfigure!=-1)
+                        if(numofnearestfigure!=-1) {
                             primitivesgroup.get(numofnearestfigure).disableMoving();
+                            MainFrame.sendListener.sendChangeStatement(numofnearestfigure,
+                                    primitivesgroup.get(numofnearestfigure).numberOfNearestPoint(endPoint),
+                                    primitivesgroup.get(numofnearestfigure));
+                        }
                     }
                     break;
                 case 2:
@@ -169,10 +171,14 @@ public class DrawingPane extends JComponent {
                         Circle circle = (Circle) primitivesgroup.get(curr);
                         circle.changeCircle(null, e.getPoint());
                         primitivesgroup.set(curr, circle);
+                        MainFrame.sendListener.setPrimitive(primitivesgroup.get(curr));
                     }
                     else{
                         if(numofnearestfigure!=-1)
                             primitivesgroup.get(numofnearestfigure).disableMoving();
+                        MainFrame.sendListener.sendChangeStatement(numofnearestfigure,
+                                primitivesgroup.get(numofnearestfigure).numberOfNearestPoint(endPoint),
+                                primitivesgroup.get(numofnearestfigure));
                     }
                     break;
                 case 3:
@@ -180,16 +186,19 @@ public class DrawingPane extends JComponent {
                         MyRectangle rectangle = (MyRectangle) primitivesgroup.get(curr);
                         rectangle.changeRectangle(null, e.getPoint());
                         primitivesgroup.set(curr, rectangle);
+                        MainFrame.sendListener.setPrimitive(primitivesgroup.get(curr));
                     }
                     else{
                         if(numofnearestfigure!=-1)
                             primitivesgroup.get(numofnearestfigure).disableMoving();
+                        MainFrame.sendListener.sendChangeStatement(numofnearestfigure,
+                                primitivesgroup.get(numofnearestfigure).numberOfNearestPoint(endPoint),
+                                primitivesgroup.get(numofnearestfigure));
                     }
                     break;
                 default:
                     break;
             }
-            sendListener.setPrimitive(primitivesgroup.get(curr));
             System.out.println("element added");
             repaint();
         }

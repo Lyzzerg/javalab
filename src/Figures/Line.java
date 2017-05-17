@@ -61,7 +61,37 @@ public class Line extends Primitives implements Serializable {
                     Math.sqrt(Math.pow(_point.getX()-end.getX(),2)+Math.pow(_point.getY()-end.getY(),2))); //расстояние до конца линии
 
         }
-        public void changeNearestPoint(Point _point){
+
+    @Override
+    public void setFirst(Point _point) {
+        start= _point;
+    }
+
+    @Override
+    public void setSecond(Point _point) {
+            end = _point;
+    }
+
+    @Override
+    public Point getFirst() {
+        return start;
+    }
+
+    @Override
+    public Point getSecond() {
+        return end;
+    }
+
+    @Override
+    public Integer numberOfNearestPoint(Point _point) {
+            if(Math.sqrt(Math.pow(_point.getX()-start.getX(),2)+Math.pow(_point.getY()-start.getY(),2))< //расстояние до начала линии
+        Math.sqrt(Math.pow(_point.getX()-end.getX(),2)+Math.pow(_point.getY()-end.getY(),2)))
+                return 0;
+            else
+                return 1;
+    }
+
+    public void changeNearestPoint(Point _point){
             if(Math.sqrt(Math.pow(_point.getX()-start.getX(),2)+Math.pow(_point.getY()-start.getY(),2))
                     < Math.sqrt(Math.pow(_point.getX()-end.getX(),2)+Math.pow(_point.getY()-end.getY(),2))){
                 setStart(_point);

@@ -9,11 +9,12 @@ import java.util.*;
 public class SendListener extends Thread {
     private ClientListener connection;
     private boolean working = true;
-    private volatile Queue<Object> primitive = new LinkedList<>();;
+    private Queue<Object> primitives;
 
     SendListener(ClientListener _connection){
         connection=_connection;
         System.out.println("Send created");
+        primitives = new LinkedList<>();
     }
 
 
@@ -22,7 +23,7 @@ public class SendListener extends Thread {
     }
 
     private void Send() throws IOException {
-        connection.getSerializer().writeObject(primitive.remove());
+        connection.getSerializer().writeObject(primitives.poll());
         connection.getSerializer().flush();
     }
 
@@ -34,21 +35,22 @@ public class SendListener extends Thread {
                     Thread.sleep(1000000000);
                 } catch (InterruptedException e) {
                     try {
-                        while(!primitive.isEmpty())
+                        while(!primitives.isEmpty())
                             Send();
                     } catch (IOException e1) {
                         System.out.println("client disconnected");
                         System.out.println("killing send thread");
                         Stop();
                     }
-                    primitive=null;
                 }
         }
         System.out.println("send thread dead");
     }
     public void setPrimitive(Object _primitive){
-        primitive.add(_primitive);
-        interrupt();
+        if(_primitive!=null) {
+            primitives.add(_primitive);
+            interrupt();
+        }
     }
     public void Stop(){
         working = false;

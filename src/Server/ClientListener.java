@@ -3,7 +3,6 @@ package Server;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
@@ -13,6 +12,7 @@ public class ClientListener {
     private Socket client;
     private ObjectOutputStream serializer=null;
     private ObjectInputStream deserializer=null;
+    private int numOfFigures = -1;
 
     ClientListener(Socket _acceptedSocket){
         client = _acceptedSocket;
@@ -30,6 +30,10 @@ public class ClientListener {
         return client;
     }
 
+    public void increaseNumOfFigures(){
+        numOfFigures++;
+    }
+    public int getNumOfFigures(){ return numOfFigures; }
     public boolean isConnected(){
         try {
             client.getOutputStream();

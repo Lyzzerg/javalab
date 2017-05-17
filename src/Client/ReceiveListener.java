@@ -3,8 +3,6 @@ package Client;
 import Figures.Primitives;
 
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Евгений on 14.05.2017.
@@ -25,9 +23,12 @@ public class ReceiveListener extends Thread {
             try {
                 Receive();
             } catch (IOException e) {
+                System.out.println("server disconnected");
+                Stop();
             } catch (ClassNotFoundException e) {
             }
         }
+        System.out.println("Receive thread dead");
     }
 
     private void Receive() throws IOException, ClassNotFoundException {

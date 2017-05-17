@@ -3,8 +3,6 @@ package Client;
 import Figures.Primitives;
 
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Евгений on 14.05.2017.
@@ -27,14 +25,13 @@ public class SendListener  extends Thread {
                 Thread.sleep(1000000000);
             } catch (InterruptedException e) {
                 try {
-                    System.out.println("sending");
                     Send();
                     primitive = null;
                 } catch (IOException e1) {
                 }
             }
-
         }
+        System.out.println("Send thread dead");
     }
 
     private void Send() throws IOException {
@@ -50,6 +47,18 @@ public class SendListener  extends Thread {
             System.out.println("setting done");
             interrupt();
         }
+    }
+
+    public void sendChangeStatement(Integer _primitivenumber, Integer _primitivePoint, Object _primitive){
+        System.out.println("sending _primitivenumber");
+        primitive = _primitivenumber;
+        interrupt();
+        System.out.println("sending _primitivePoint");
+        primitive = _primitivePoint;
+        interrupt();
+        System.out.println("sending _primitive");
+        primitive = _primitive;
+        interrupt();
     }
 
     public void Stop(){

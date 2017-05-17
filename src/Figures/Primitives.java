@@ -15,4 +15,9 @@ public abstract class Primitives {
     public void disableMoving(){
         moving=false;
     }
+    public abstract void setFirst(Point _point);
+    public abstract void setSecond(Point _point);
+    public abstract Point getFirst();
+    public abstract Point getSecond();
+    public abstract Integer numberOfNearestPoint(Point _point);
 }

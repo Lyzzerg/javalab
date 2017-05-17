@@ -15,13 +15,6 @@ public class MyRectangle extends Primitives implements Serializable {
         rdownpoint =_downpoint;
     }
 
-    public Point getLupperpoint(){
-        return lupperpoint;
-    }
-    public Point getRdownpoint(){
-        return rdownpoint;
-    }
-
     public void changeRectangle(Point _lupperpoint, Point _rdownpoint){
         if(_lupperpoint!=null){
             lupperpoint =_lupperpoint;
@@ -55,6 +48,36 @@ public class MyRectangle extends Primitives implements Serializable {
         return Math.min(Math.sqrt(Math.pow(_point.getX()- lupperpoint.getX(),2)+Math.pow(_point.getY()- lupperpoint.getY(),2)), //расстояние до верхней точки
                 Math.sqrt(Math.pow(_point.getX()- rdownpoint.getX(),2)+Math.pow(_point.getY()- rdownpoint.getY(),2))); //расстояние до нижней точки
     }
+
+    @Override
+    public void setFirst(Point _point) {
+        lupperpoint = _point;
+    }
+
+    @Override
+    public void setSecond(Point _point) {
+        rdownpoint = _point;
+    }
+
+    @Override
+    public Point getFirst() {
+        return lupperpoint;
+    }
+
+    @Override
+    public Point getSecond() {
+        return rdownpoint;
+    }
+
+    @Override
+    public Integer numberOfNearestPoint(Point _point) {
+        if(Math.sqrt(Math.pow(_point.getX()- lupperpoint.getX(),2)+Math.pow(_point.getY()- lupperpoint.getY(),2)) <
+                Math.sqrt(Math.pow(_point.getX()- rdownpoint.getX(),2)+Math.pow(_point.getY()- rdownpoint.getY(),2)))
+            return 0;
+        else
+            return 1;
+    }
+
     public void changeNearest(Point _point){
         if(Math.sqrt(Math.pow(_point.getX()- lupperpoint.getX(),2)+Math.pow(_point.getY()- lupperpoint.getY(),2)) < //расстояние до верхней точки
                 Math.sqrt(Math.pow(_point.getX()- rdownpoint.getX(),2)+Math.pow(_point.getY()- rdownpoint.getY(),2))){//расстояние до нижней точки

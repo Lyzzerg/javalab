@@ -59,6 +59,31 @@ public class Circle extends Primitives implements Serializable {
         return Math.sqrt(Math.pow(_point.getX()-circleCenter.getX(),2)+Math.pow(_point.getY()-circleCenter.getY(),2)); //расстояние до центра круга
     }
 
+    @Override
+    public void setFirst(Point _point) {
+        lupperpoint = _point;
+    }
+
+    @Override
+    public void setSecond(Point _point) {
+        rdownpoint = _point;
+    }
+
+    @Override
+    public Point getFirst() {
+        return lupperpoint;
+    }
+
+    @Override
+    public Point getSecond() {
+        return rdownpoint;
+    }
+
+    @Override
+    public Integer numberOfNearestPoint(Point _point) {
+        return 1;
+    }
+
     private Point getCenter(){
         return new Point((int)(lupperpoint.getX()+(rdownpoint.getX()-lupperpoint.getX())/2),((int)(lupperpoint.getY()+(rdownpoint.getY()-lupperpoint.getY())/2)));
     }

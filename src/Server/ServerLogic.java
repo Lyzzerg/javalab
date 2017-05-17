@@ -2,7 +2,7 @@ package Server; /**
  * Created by Евгений on 24.03.2017.
  */
 import Figures.Primitives;
-import Figures.*;
+import com.sun.corba.se.impl.orbutil.concurrent.Mutex;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -16,6 +16,8 @@ public class ServerLogic implements Runnable{
     volatile boolean keepProcessing=true;
 
     volatile static ArrayList<Primitives> primitives = new ArrayList<>();
+    volatile static ArrayList<Mutex> mutexes = new ArrayList<>();
+
     volatile static int num_added_figure=-1;
 
     @Override
@@ -40,29 +42,8 @@ public class ServerLogic implements Runnable{
     void process(Socket socket) {
         if (socket == null)
             return;
-        Runnable clientHandler = () -> {
-            ClientListener connection = new ClientListener(socket);
-            connection.Connect();
-            SendListener sendListener = new SendListener(connection);
-            ReceiveListener receiveListener = new ReceiveListener(connection);
-            sendListener.start();
-            receiveListener.start();
-            int figure_num = -1;
-            System.out.println(num_added_figure);
-            while(connection.isConnected()) {
-                    //если количество фигур не совпадает разослать всем.
-                    if(figure_num < num_added_figure) {
-                        while(figure_num < num_added_figure){
-                            figure_num++;
-                            System.out.println(figure_num);
-                            sendListener.setPrimitive(primitives.get(figure_num));
-                        }
-                    }
-            }
-            sendListener.Stop();
-        };
-        Thread clientConnection = new Thread(clientHandler);
-        clientConnection.start();
+        ClientHandler clientHandler = new ClientHandler(socket);
+        clientHandler.start();
     }
 
     public void stopProcessing(){
