@@ -14,6 +14,10 @@ public class Circle extends Primitives implements Serializable {
         lupperpoint=_lupperpoint;
         rdownpoint=_rdownpoint;
     }
+    public Circle(Packet _packet){
+        lupperpoint= new Point((int)_packet.getX1(),(int)_packet.getY1());
+        rdownpoint=new Point((int)_packet.getX2(),(int)_packet.getY2());
+    }
 
     public Point getlUpperpoint(){
         return lupperpoint;
@@ -82,6 +86,12 @@ public class Circle extends Primitives implements Serializable {
     @Override
     public Integer numberOfNearestPoint(Point _point) {
         return 1;
+    }
+
+    @Override
+    public Packet ToPacket() {
+        Packet result = new Packet(2, (float)lupperpoint.getX(), (float)lupperpoint.getY(), (float)rdownpoint.getX(),(float)rdownpoint.getY());
+        return result;
     }
 
     private Point getCenter(){

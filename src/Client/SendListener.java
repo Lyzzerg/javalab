@@ -1,20 +1,25 @@
 package Client;
 
+import Figures.Packet;
 import Figures.Primitives;
+import MoveFigure.MovingPrimitive;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Created by Евгений on 14.05.2017.
  */
 public class SendListener  extends Thread {
 
-    Object primitive=null;
+    Queue<Object> primitives;
     ServerListener connection;
     private boolean working = true;
 
     SendListener(ServerListener _connection){
         connection = _connection;
+        primitives = new LinkedList<>();
     }
 
     @Override
@@ -26,7 +31,6 @@ public class SendListener  extends Thread {
             } catch (InterruptedException e) {
                 try {
                     Send();
-                    primitive = null;
                 } catch (IOException e1) {
                 }
             }
@@ -35,30 +39,19 @@ public class SendListener  extends Thread {
     }
 
     private void Send() throws IOException {
-        connection.getSerializer().writeObject(primitive);
+        connection.getSerializer().writeObject(primitives.remove());
         connection.getSerializer().flush();
-        primitive=null;
         System.out.println("sended");
     }
 
     public void  setPrimitive(Object _primitive){
-        primitive=_primitive;
-        if(primitive instanceof Primitives) {
+        primitives.add(_primitive);
+        if(_primitive instanceof Packet) {
             System.out.println("setting done");
             interrupt();
+        } else if(_primitive instanceof MovingPrimitive){
+            System.out.println("moving done");
         }
-    }
-
-    public void sendChangeStatement(Integer _primitivenumber, Integer _primitivePoint, Object _primitive){
-        System.out.println("sending _primitivenumber");
-        primitive = _primitivenumber;
-        interrupt();
-        System.out.println("sending _primitivePoint");
-        primitive = _primitivePoint;
-        interrupt();
-        System.out.println("sending _primitive");
-        primitive = _primitive;
-        interrupt();
     }
 
     public void Stop(){

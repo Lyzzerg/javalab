@@ -14,6 +14,10 @@ public class MyRectangle extends Primitives implements Serializable {
         lupperpoint =_upperpoint;
         rdownpoint =_downpoint;
     }
+    public MyRectangle(Packet _packet){
+        lupperpoint= new Point((int)_packet.getX1(),(int)_packet.getY1());
+        rdownpoint=new Point((int)_packet.getX2(),(int)_packet.getY2());
+    }
 
     public void changeRectangle(Point _lupperpoint, Point _rdownpoint){
         if(_lupperpoint!=null){
@@ -76,6 +80,12 @@ public class MyRectangle extends Primitives implements Serializable {
             return 0;
         else
             return 1;
+    }
+
+    @Override
+    public Packet ToPacket() {
+        Packet result = new Packet(3, (float)lupperpoint.getX(), (float)lupperpoint.getY(), (float)rdownpoint.getX(),(float)rdownpoint.getY());
+        return result;
     }
 
     public void changeNearest(Point _point){

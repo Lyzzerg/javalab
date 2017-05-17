@@ -1,7 +1,10 @@
 package Server;
 
+import Figures.Packet;
 import Figures.Primitives;
+import MoveFigure.MovingPrimitive;
 import com.sun.corba.se.impl.orbutil.concurrent.Mutex;
+import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 
 import java.io.IOException;
 
@@ -38,15 +41,21 @@ public class ReceiveListener extends Thread {
 
     private void Receive() throws IOException, ClassNotFoundException {
         primitive = connection.getDeserializer().readObject();
-        if(primitive instanceof Primitives) {
-            ServerLogic.primitives.add((Primitives) primitive);
-            while(ServerLogic.primitives.get(ServerLogic.num_added_figure + 1) == null){
-                try {
-                    System.out.println("not added");
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                }
+        if(primitive instanceof MovingPrimitive){
+            try {
+                ServerLogic.mutexes.get(((MovingPrimitive) primitive).getNumberInMassive()*2 +
+                        ((MovingPrimitive) primitive).getNumberOfPoint()).acquire();
+            } catch (InterruptedException e) {
             }
+
+            primitive = connection.getDeserializer().readObject();
+            ServerLogic.primitives.set(((MovingPrimitive) primitive).getNumberInMassive(),((MovingPrimitive) primitive).getPrimitive());
+
+            ServerLogic.mutexes.get(((MovingPrimitive) primitive).getNumberInMassive()*2 +
+                        ((MovingPrimitive) primitive).getNumberOfPoint()).release();
+        }
+        if(primitive instanceof Packet) {
+            ServerLogic.primitives.add((Packet) primitive);
             System.out.println(ServerLogic.num_added_figure);
             System.out.println("added");
             ServerLogic.mutexes.add(new Mutex());
@@ -55,27 +64,6 @@ public class ReceiveListener extends Thread {
             ServerLogic.num_added_figure++;
             System.out.println(ServerLogic.num_added_figure);
             System.out.println("Element"+primitive+"received");
-        } else if(primitive instanceof Integer){
-            try {
-                Integer numberOfPrimitive = (Integer) primitive;
-                System.out.println("changing primitive number " + numberOfPrimitive);
-                Integer numberOfPoint = (Integer) connection.getDeserializer().readObject();
-                System.out.println("changing point " + numberOfPoint);
-                ServerLogic.mutexes.get(numberOfPrimitive*2+numberOfPoint).acquire();
-                System.out.println("mutex acquired");
-                primitive = connection.getDeserializer().readObject();
-                if(numberOfPoint==0) {
-                    ServerLogic.primitives.get(numberOfPrimitive).setFirst(((Primitives) primitive).getFirst());
-                    System.out.println("first point changed");
-                }
-                else if(numberOfPoint==1){
-                    ServerLogic.primitives.get(numberOfPrimitive).setSecond(((Primitives)primitive).getSecond());
-                    System.out.println("second point changed");
-                }
-                ServerLogic.mutexes.get(numberOfPrimitive*2+numberOfPoint).release();
-                System.out.println("mutex released");
-            } catch (InterruptedException e) {
-            }
         }
         primitive = null;
     }

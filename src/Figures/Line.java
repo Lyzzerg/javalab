@@ -15,6 +15,11 @@ public class Line extends Primitives implements Serializable {
             end=_end;
         }
 
+        public Line(Packet _packet){
+            start= new Point((int)_packet.getX1(),(int)_packet.getY1());
+            end=new Point((int)_packet.getX2(),(int)_packet.getY2());
+        }
+
         public Line(double x1, double y1, double x2, double y2){
             start.setLocation(x1,y1);
             end.setLocation(x2,y2);
@@ -89,6 +94,12 @@ public class Line extends Primitives implements Serializable {
                 return 0;
             else
                 return 1;
+    }
+
+    @Override
+    public Packet ToPacket() {
+        Packet result = new Packet(1, (float)start.getX(), (float)start.getY(), (float)end.getX(),(float)end.getY());
+        return result;
     }
 
     public void changeNearestPoint(Point _point){

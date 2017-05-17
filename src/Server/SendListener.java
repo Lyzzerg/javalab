@@ -23,7 +23,7 @@ public class SendListener extends Thread {
     }
 
     private void Send() throws IOException {
-        connection.getSerializer().writeObject(primitives.poll());
+        connection.getSerializer().writeObject(primitives.remove());
         connection.getSerializer().flush();
     }
 

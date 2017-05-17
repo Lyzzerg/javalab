@@ -1,7 +1,7 @@
 package Server; /**
  * Created by Евгений on 24.03.2017.
  */
-import Figures.Primitives;
+import Figures.Packet;
 import com.sun.corba.se.impl.orbutil.concurrent.Mutex;
 
 import java.io.*;
@@ -15,7 +15,7 @@ public class ServerLogic implements Runnable{
 
     volatile boolean keepProcessing=true;
 
-    volatile static ArrayList<Primitives> primitives = new ArrayList<>();
+    volatile static ArrayList<Packet> primitives = new ArrayList<>();
     volatile static ArrayList<Mutex> mutexes = new ArrayList<>();
 
     volatile static int num_added_figure=-1;

@@ -1,7 +1,7 @@
 package Client;
 
 import Figures.*;
-import Server.*;
+import MoveFigure.MovingPrimitive;
 
 import javax.swing.*;
 import java.awt.*;
@@ -130,6 +130,10 @@ public class DrawingPane extends JComponent {
                     numofnearestfigure=-1;
                 }else{
                     primitivesgroup.get(numofnearestfigure).enableMoving();
+                    boolean _numberOfPoint=false;
+                    if(primitivesgroup.get(numofnearestfigure).numberOfNearestPoint(e.getPoint())==1)
+                        _numberOfPoint=true;
+                    MainFrame.sendListener.setPrimitive(new MovingPrimitive(numofnearestfigure, _numberOfPoint, primitivesgroup.get(numofnearestfigure).ToPacket()));
                 }
                 if(numofnearestfigure!=-1)
                     if(primitivesgroup.get(numofnearestfigure) instanceof Circle){
@@ -142,6 +146,7 @@ public class DrawingPane extends JComponent {
                             System.out.println("X now "+(int)(circle.getlUpperpoint().getX())+"Y now"+(int)(circle.getrDownpoint().getY()));
                         }catch (AWTException except){
                         }
+                        MainFrame.sendListener.setPrimitive(new MovingPrimitive(numofnearestfigure, true, circle.ToPacket()));
                     }
             }
         }
@@ -156,13 +161,14 @@ public class DrawingPane extends JComponent {
                         Line line = (Line) primitivesgroup.get(curr);
                         line.setEnd(e.getPoint());
                         primitivesgroup.set(curr, line);
-                        MainFrame.sendListener.setPrimitive(primitivesgroup.get(curr));
+                        MainFrame.sendListener.setPrimitive(primitivesgroup.get(curr).ToPacket());
                     } else {
                         if(numofnearestfigure!=-1) {
                             primitivesgroup.get(numofnearestfigure).disableMoving();
-                            MainFrame.sendListener.sendChangeStatement(numofnearestfigure,
-                                    primitivesgroup.get(numofnearestfigure).numberOfNearestPoint(endPoint),
-                                    primitivesgroup.get(numofnearestfigure));
+                            boolean temp = false;
+                            if(primitivesgroup.get(numofnearestfigure).numberOfNearestPoint(endPoint)==1)
+                                temp = true;
+                            MainFrame.sendListener.setPrimitive(new MovingPrimitive(numofnearestfigure, temp, primitivesgroup.get(numofnearestfigure).ToPacket()));
                         }
                     }
                     break;
@@ -171,14 +177,12 @@ public class DrawingPane extends JComponent {
                         Circle circle = (Circle) primitivesgroup.get(curr);
                         circle.changeCircle(null, e.getPoint());
                         primitivesgroup.set(curr, circle);
-                        MainFrame.sendListener.setPrimitive(primitivesgroup.get(curr));
+                        MainFrame.sendListener.setPrimitive(primitivesgroup.get(curr).ToPacket());
                     }
                     else{
                         if(numofnearestfigure!=-1)
                             primitivesgroup.get(numofnearestfigure).disableMoving();
-                        MainFrame.sendListener.sendChangeStatement(numofnearestfigure,
-                                primitivesgroup.get(numofnearestfigure).numberOfNearestPoint(endPoint),
-                                primitivesgroup.get(numofnearestfigure));
+                        MainFrame.sendListener.setPrimitive(new MovingPrimitive(numofnearestfigure, true, primitivesgroup.get(numofnearestfigure).ToPacket()));
                     }
                     break;
                 case 3:
@@ -186,20 +190,21 @@ public class DrawingPane extends JComponent {
                         MyRectangle rectangle = (MyRectangle) primitivesgroup.get(curr);
                         rectangle.changeRectangle(null, e.getPoint());
                         primitivesgroup.set(curr, rectangle);
-                        MainFrame.sendListener.setPrimitive(primitivesgroup.get(curr));
+                        MainFrame.sendListener.setPrimitive(primitivesgroup.get(curr).ToPacket());
                     }
                     else{
                         if(numofnearestfigure!=-1)
                             primitivesgroup.get(numofnearestfigure).disableMoving();
-                        MainFrame.sendListener.sendChangeStatement(numofnearestfigure,
-                                primitivesgroup.get(numofnearestfigure).numberOfNearestPoint(endPoint),
-                                primitivesgroup.get(numofnearestfigure));
+                        boolean temp = false;
+                        if(primitivesgroup.get(numofnearestfigure).numberOfNearestPoint(endPoint)==1)
+                            temp = true;
+                        MainFrame.sendListener.setPrimitive(new MovingPrimitive(numofnearestfigure, temp, primitivesgroup.get(numofnearestfigure).ToPacket()));
                     }
                     break;
                 default:
                     break;
             }
-            System.out.println("element added");
+            System.out.println("element added or moved");
             repaint();
         }
 

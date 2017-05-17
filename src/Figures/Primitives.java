@@ -20,4 +20,5 @@ public abstract class Primitives {
     public abstract Point getFirst();
     public abstract Point getSecond();
     public abstract Integer numberOfNearestPoint(Point _point);
+    public abstract Packet ToPacket();
 }

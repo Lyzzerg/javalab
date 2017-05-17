@@ -1,6 +1,5 @@
 package Client;
 
-import Server.Server;
 
 /**
  * Created by Евгений on 17.05.2017.

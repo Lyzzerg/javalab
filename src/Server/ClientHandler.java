@@ -1,5 +1,7 @@
 package Server;
 
+import MoveFigure.MovingPrimitive;
+
 import java.net.Socket;
 
 /**
@@ -36,7 +38,6 @@ public class ClientHandler extends Thread {
                         }
                     }
                     sendListener.setPrimitive(ServerLogic.primitives.get(connection.getNumOfFigures()));
-
                 }
             }
         }

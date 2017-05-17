@@ -1,6 +1,7 @@
 package Client;
 
-import Figures.Primitives;
+import Figures.*;
+import MoveFigure.MovingPrimitive;
 
 import java.io.IOException;
 
@@ -34,9 +35,24 @@ public class ReceiveListener extends Thread {
     private void Receive() throws IOException, ClassNotFoundException {
         if(primitive==null)
             primitive=connection.getDeserializer().readObject();
-        if(primitive instanceof Primitives) {
-            DrawingPane.primitivesgroup.add((Primitives) primitive);
+        if(primitive instanceof Packet) {
+            if(((Packet) primitive).getType()==1) {
+                DrawingPane.primitivesgroup.add(new Line((Packet)primitive));
+            }
+            else if(((Packet) primitive).getType()==2){
+                DrawingPane.primitivesgroup.add(new Circle((Packet)primitive));
+            } else if(((Packet) primitive).getType()==3){
+                DrawingPane.primitivesgroup.add(new MyRectangle((Packet)primitive));
+            }
             DrawingPane.curr++;
+        }
+        if(primitive instanceof MovingPrimitive){
+            if(((MovingPrimitive) primitive).getPrimitive().getType() == 1)
+                DrawingPane.primitivesgroup.set(((MovingPrimitive) primitive).getNumberInMassive(), new Line(((MovingPrimitive) primitive).getPrimitive()));
+            else if(((MovingPrimitive) primitive).getPrimitive().getType() == 2)
+                DrawingPane.primitivesgroup.set(((MovingPrimitive) primitive).getNumberInMassive(), new Circle(((MovingPrimitive) primitive).getPrimitive()));
+            else if(((MovingPrimitive) primitive).getPrimitive().getType() == 3)
+                DrawingPane.primitivesgroup.set(((MovingPrimitive) primitive).getNumberInMassive(), new MyRectangle(((MovingPrimitive) primitive).getPrimitive()));
         }
         primitive = null;
     }

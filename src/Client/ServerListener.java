@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.rmi.ConnectIOException;
 
 /**
  * Created by Евгений on 14.05.2017.
  */
+
 public class ServerListener {
     private static int serverPort = 4444;
     private static String hostAdress = "localhost";
