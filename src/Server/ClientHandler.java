@@ -1,7 +1,5 @@
 package Server;
 
-import MoveFigure.MovingPrimitive;
-
 import java.net.Socket;
 
 /**
@@ -9,7 +7,8 @@ import java.net.Socket;
  */
 public class ClientHandler extends Thread {
     Socket clientSocket;
-
+    private SendListener sendListener;
+    private ReceiveListener receiveListener;
     ClientHandler(Socket _clientSocket){
         clientSocket=_clientSocket;
     }
@@ -17,8 +16,8 @@ public class ClientHandler extends Thread {
     public void run() {
         ClientListener connection = new ClientListener(clientSocket);
         connection.Connect();
-        SendListener sendListener = new SendListener(connection);
-        ReceiveListener receiveListener = new ReceiveListener(connection);
+        sendListener = new SendListener(connection);
+        receiveListener = new ReceiveListener(connection);
         sendListener.start();
         receiveListener.start();
         System.out.println(ServerLogic.num_added_figure);
@@ -42,5 +41,12 @@ public class ClientHandler extends Thread {
             }
         }
        sendListener.Stop();
+    }
+
+    public SendListener getSendListener(){
+        return sendListener;
+    }
+    public ReceiveListener getReceiveListener(){
+        return receiveListener;
     }
 }

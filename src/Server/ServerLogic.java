@@ -17,7 +17,7 @@ public class ServerLogic implements Runnable{
 
     volatile static ArrayList<Packet> primitives = new ArrayList<>();
     volatile static ArrayList<Mutex> mutexes = new ArrayList<>();
-
+    volatile static ArrayList<ClientHandler> handlers = new ArrayList<>();
     volatile static int num_added_figure=-1;
 
     @Override
@@ -43,6 +43,7 @@ public class ServerLogic implements Runnable{
         if (socket == null)
             return;
         ClientHandler clientHandler = new ClientHandler(socket);
+        handlers.add(clientHandler);
         clientHandler.start();
     }
 

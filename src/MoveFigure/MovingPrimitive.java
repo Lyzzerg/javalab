@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by Евгений on 17.05.2017.
  */
-public class MovingPrimitive implements Serializable{
+public class MovingPrimitive implements Serializable {
 
     public int getNumberInMassive() {
         return numberInMassive;

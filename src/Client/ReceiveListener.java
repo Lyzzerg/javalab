@@ -47,6 +47,7 @@ public class ReceiveListener extends Thread {
             DrawingPane.curr++;
         }
         if(primitive instanceof MovingPrimitive){
+            System.out.println("двигаем типа лол");
             if(((MovingPrimitive) primitive).getPrimitive().getType() == 1)
                 DrawingPane.primitivesgroup.set(((MovingPrimitive) primitive).getNumberInMassive(), new Line(((MovingPrimitive) primitive).getPrimitive()));
             else if(((MovingPrimitive) primitive).getPrimitive().getType() == 2)

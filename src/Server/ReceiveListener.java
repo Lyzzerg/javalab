@@ -1,10 +1,8 @@
 package Server;
 
 import Figures.Packet;
-import Figures.Primitives;
 import MoveFigure.MovingPrimitive;
 import com.sun.corba.se.impl.orbutil.concurrent.Mutex;
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 
 import java.io.IOException;
 
@@ -40,19 +38,29 @@ public class ReceiveListener extends Thread {
     }
 
     private void Receive() throws IOException, ClassNotFoundException {
+        System.out.println("пытаюсь принять");
         primitive = connection.getDeserializer().readObject();
+        System.out.println(primitive);
         if(primitive instanceof MovingPrimitive){
             try {
                 ServerLogic.mutexes.get(((MovingPrimitive) primitive).getNumberInMassive()*2 +
                         ((MovingPrimitive) primitive).getNumberOfPoint()).acquire();
+                System.out.println("mutex blocked");
             } catch (InterruptedException e) {
             }
 
             primitive = connection.getDeserializer().readObject();
             ServerLogic.primitives.set(((MovingPrimitive) primitive).getNumberInMassive(),((MovingPrimitive) primitive).getPrimitive());
-
+            System.out.println("primitive changed");
+            for (ClientHandler h:
+                    ServerLogic.handlers) {
+                h.getSendListener().setPrimitive(new MovingPrimitive(((MovingPrimitive) primitive).getNumberInMassive(),
+                        true, ServerLogic.primitives.get(((MovingPrimitive) primitive).getNumberInMassive())));
+                System.out.println("рассылка всем");
+            }
             ServerLogic.mutexes.get(((MovingPrimitive) primitive).getNumberInMassive()*2 +
                         ((MovingPrimitive) primitive).getNumberOfPoint()).release();
+            System.out.println("мьютекс освобождён");
         }
         if(primitive instanceof Packet) {
             ServerLogic.primitives.add((Packet) primitive);
