@@ -128,26 +128,27 @@ public class DrawingPane extends JComponent {
                 }
                 if(distance>eps){
                     numofnearestfigure=-1;
-                }else{
+                }else {
                     primitivesgroup.get(numofnearestfigure).enableMoving();
-                    boolean _numberOfPoint=false;
-                    if(primitivesgroup.get(numofnearestfigure).numberOfNearestPoint(e.getPoint())==1)
-                        _numberOfPoint=true;
-                    MainFrame.sendListener.setPrimitive(new MovingPrimitive(numofnearestfigure, _numberOfPoint, primitivesgroup.get(numofnearestfigure).ToPacket()));
-                }
-                if(numofnearestfigure!=-1)
-                    if(primitivesgroup.get(numofnearestfigure) instanceof Circle){
-                        Circle circle =(Circle) primitivesgroup.get(numofnearestfigure);
-                        System.out.println("X was "+(int)circle.getrDownpoint().getX()+"Y was "+(int)circle.getrDownpoint().getY());
-                        try{
-                            Robot r = new Robot();
-                            r.mouseMove((int)(leftcorner.getX()+circle.getrDownpoint().getX()),(int)(leftcorner.getY()+circle.getrDownpoint().getY()));
-                            System.out.println((int)leftcorner.getX()+" "+(int)leftcorner.getY());
-                            System.out.println("X now "+(int)(circle.getlUpperpoint().getX())+"Y now"+(int)(circle.getrDownpoint().getY()));
-                        }catch (AWTException except){
-                        }
+
+                    if (primitivesgroup.get(numofnearestfigure) instanceof Circle) {
+                        Circle circle = (Circle) primitivesgroup.get(numofnearestfigure);
                         MainFrame.sendListener.setPrimitive(new MovingPrimitive(numofnearestfigure, true, circle.ToPacket()));
+                        System.out.println("X was " + (int) circle.getrDownpoint().getX() + "Y was " + (int) circle.getrDownpoint().getY());
+                        try {
+                            Robot r = new Robot();
+                            r.mouseMove((int) (leftcorner.getX() + circle.getrDownpoint().getX()), (int) (leftcorner.getY() + circle.getrDownpoint().getY()));
+                            System.out.println((int) leftcorner.getX() + " " + (int) leftcorner.getY());
+                            System.out.println("X now " + (int) (circle.getlUpperpoint().getX()) + "Y now" + (int) (circle.getrDownpoint().getY()));
+                        } catch (AWTException except) {
+                        }
+                    } else{
+                        boolean _numberOfPoint = false;
+                        if (primitivesgroup.get(numofnearestfigure).numberOfNearestPoint(e.getPoint()) == 1)
+                            _numberOfPoint = true;
+                        MainFrame.sendListener.setPrimitive(new MovingPrimitive(numofnearestfigure, _numberOfPoint, primitivesgroup.get(numofnearestfigure).ToPacket()));
                     }
+                }
             }
         }
 

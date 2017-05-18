@@ -13,13 +13,13 @@ import java.util.Queue;
  */
 public class SendListener  extends Thread {
 
-    Object primitive;
+    Queue<Object> primitives;
     ServerListener connection;
     private boolean working = true;
 
     SendListener(ServerListener _connection){
         connection = _connection;
-        primitive = null;
+        primitives = new LinkedList<>();
     }
 
     @Override
@@ -39,21 +39,19 @@ public class SendListener  extends Thread {
     }
 
     private void Send() throws IOException {
-        connection.getSerializer().writeObject(primitive);
+        connection.getSerializer().writeObject(primitives.remove());
         connection.getSerializer().flush();
         System.out.println("sended");
-        primitive = null;
     }
 
     public void  setPrimitive(Object _primitive){
-        primitive = _primitive;
-        if(primitive instanceof Packet) {
-            System.out.println("setting done");
-            interrupt();
-        } else if(primitive instanceof MovingPrimitive){
-            System.out.println("moving done");
-            interrupt();
+        primitives.add(_primitive);
+        if(_primitive instanceof Packet) {
+            System.out.println("setting");
+        } else if(_primitive instanceof MovingPrimitive){
+            System.out.println("moving");
         }
+        interrupt();
     }
 
     public void Stop(){
